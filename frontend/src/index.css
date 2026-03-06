@@ -1,7 +1,21 @@
-.nav-link{
-margin-left: 40px;
+.nav-link {
+  margin-left: 40px;
 }
 
-a{
+a {
   text-decoration: none;
+}
+
+#support {
+  display: flex;
+  justify-content: space-between;
+  background-color: #380d78;
+  height: 40%;
+}
+input {
+  text-align: center;
+  width: 200px;
+  background-color: white;
+  width: 200px;
+  margin: 5rem;
 }

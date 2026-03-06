@@ -2,9 +2,9 @@ import React from 'react'
 
 
 function CreateTicket() {
-  return (<div>
-    <h1></h1>
-  </div> );
+  return (
+    <div></div>
+  );
 }
 
 export default CreateTicket;
