@@ -17,11 +17,16 @@ const isAuth = require("./middlewares");
 
 const flash = require("connect-flash");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(bodyParser.json());
-
+app.use(express.json());
 app.get("/", (req, res) => {
-  res.send("successfully");
+  res.send("Api call successfull");
 });
 
 app.use(
@@ -38,21 +43,6 @@ app.use(flash());
 app.use("/auth", authRoutes);
 
 connectDB();
-
-app.get("/login", (req, res) => {
-  res.json({
-    error: req.flash("error"),
-    success: req.flash("success"),
-  });
-});
-app.post(
-  "/auth/login",
-  passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/login",
-    failureFlash: true,
-  }),
-);
 
 app.get("/allHoldings", isAuth, async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
@@ -75,41 +65,6 @@ app.post("/newOrder", async (req, res) => {
   await newOrder.save();
 
   res.send("Order saved!");
-});
-
-app.post("/signup", async (req, res) => {
-  const { username, email, password } = req.body;
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const newUser = new User({
-    username,
-    email,
-    password: hashedPassword,
-  });
-
-  await newUser.save();
-
-  res.json({
-    message: "User registered successfully",
-  });
-});
-
-app.post("/login", passport.authenticate("local"), (req, res) => {
-  res.json({
-    message: "Login successful",
-    user: req.user,
-  });
-});
-
-app.get("/logout", (req, res) => {
-  req.logout(function (err) {
-    if (err) return next(err);
-
-    res.json({
-      message: "Logged out",
-    });
-  });
 });
 
 app.listen(PORT, (req, res) => {
