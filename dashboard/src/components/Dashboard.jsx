@@ -17,7 +17,6 @@ const Dashboard = () => {
       <GeneralContextProvider>
         <WatchList />
       </GeneralContextProvider>
-      {/* <WatchList /> */}
 
       <div className="content">
         <Routes>

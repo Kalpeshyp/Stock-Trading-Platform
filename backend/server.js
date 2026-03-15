@@ -17,14 +17,10 @@ const isAuth = require("./middlewares");
 
 const flash = require("connect-flash");
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }),
-);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Api call successfull");
 });
@@ -44,7 +40,7 @@ app.use("/auth", authRoutes);
 
 connectDB();
 
-app.get("/allHoldings", isAuth, async (req, res) => {
+app.get("/allHoldings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
   res.json(allHoldings);
 });
